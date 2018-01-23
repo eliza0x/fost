@@ -291,7 +291,7 @@ module Decode(
         val3 = from_inst.inst[rd_begin:rd_end];
         is_val1_data_hazard = is_datahazard_rd;
         is_val2_data_hazard = 0;
-        $display("is_val1_data_hazard: %d", is_datahazard_rd);
+        // $display("is_val1_data_hazard: %d", is_datahazard_rd);
     endfunction
 
     function void subi();
@@ -495,12 +495,4 @@ module Decode(
         is_val1_data_hazard = 0;
         is_val2_data_hazard = 0;
     endfunction
-
-    always @(negedge do_halt) begin
-        $display("=================================");
-        for (byte i=0; i<16; i++) begin
-            $display("regs[%2d]: %d", i, regs[i]);
-        end
-        $display("=================================");
-    end
 endmodule

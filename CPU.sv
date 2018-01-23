@@ -73,9 +73,25 @@ module CPU(
         $display("do_halt: %d", do_halt);
         clk = 1'b0;
         rst = 1;
+
+        fetch_module.memory[0] <= 16'h0000;
+        fetch_module.memory[1] <= 16'b1000_0010_00000001; // $2 = 10
+        fetch_module.memory[2] <= 16'b0101_0010_00001010; // $2 += 10
+        fetch_module.memory[3] <= 16'b1111_1111_1111_1111;// halt
     end
     always #(one_clock*2) clk = ~clk;
-    always @(negedge do_halt) $finish(1);
+    always @(negedge do_halt) begin
+        $display("=================================");
+        for (byte i=0; i<20; i++) begin
+            $display("memory[%2d]: %d", i, memory_module.memory[i]);
+        end
+        $display("--------------------------------");
+        for (byte i=0; i<16; i++) begin
+            $display("regs[%2d]: %d", i, decode_module.regs[i]);
+        end
+        $display("=================================");
+        $finish(1);
+    end
     always @(posedge clk) begin
         $display("pc: %d", pc);
     end

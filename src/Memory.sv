@@ -53,6 +53,10 @@ module Memory(
                 do_mem_reg_write <= is_reg_write;
                 mem_value    <= memory[val1 + val2];
                 mem_reg_addr <= val3;
+            end else begin
+                do_mem_reg_write <= 0;
+                mem_value        <= 0;
+                mem_reg_addr     <= 0;
             end
             if (is_mem_write) begin
                 $display("!!!!!!!!!!!! val(%d+%d): %d", val1, val2, val3);
@@ -61,12 +65,5 @@ module Memory(
         end
     end
 
-    always @(negedge do_halt) begin
-        $display("=================================");
-        for (byte i=0; i<20; i++) begin
-            $display("memory[%2d]: %d", i, memory[i]);
-        end
-        $display("=================================");
-    end
 endmodule
 

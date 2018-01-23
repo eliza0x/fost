@@ -31,6 +31,7 @@ module Execute(
     output bit [3:0] exe_reg_addr
 );
     `include "./Parameter.sv"
+    bit   store_is_halt;
     initial begin
         result         <= 0;
         do_branch      <= 0;
@@ -42,6 +43,7 @@ module Execute(
         exe_reg_addr     <= 0;
     
         result           <= 0;
+        store_is_halt    <= 1;
     end
 
     always @(posedge clk or negedge rst) begin
@@ -52,8 +54,10 @@ module Execute(
             result         <= 0;
             exe_reg_addr   <= 0;
             do_exe_reg_write <= 0;
+            store_is_halt    <= 1;
         end else begin
-            do_halt          <= is_halt;
+            store_is_halt    <= is_halt;
+            do_halt          <= store_is_halt;
             do_branch        <= is_branch && calc();
             branch_address   <= val3;
             result           <= calc();
@@ -69,7 +73,7 @@ module Execute(
             fval1 = mem_value;
         end else if (is_val1_data_hazard && !is_mem_data_hazard) begin
             fval1 = result;
-        end else if (!is_val1_data_hazard && !is_mem_data_hazard) begin
+        end else begin
             fval1 = val1;
         end
 
@@ -77,7 +81,7 @@ module Execute(
             fval2 = mem_value;
         end else if (is_val2_data_hazard && !is_mem_data_hazard) begin
             fval2 = result;
-        end else if (!is_val2_data_hazard && !is_mem_data_hazard) begin
+        end else begin
             fval2 = val2;
         end
 
