@@ -1,33 +1,36 @@
 # vsim -c -keepstdout -do "add wave *;run -all;quit" CPU 
-# Start time: 14:49:39 on Jan 23,2018
+# Start time: 19:06:58 on Jan 23,2018
 # Loading sv_std.std
 # Loading work.CPU_sv_unit
 # Loading work.CPU
 # Loading work.PC
 # Loading work.Fetch
-# Loading work.Schedule
 # Loading work.Decode
 # Loading work.Memory
 # Loading work.Execute
 # add wave *
 # run -all
 # do_halt: 0
-# pc:   0, inst: xxxxxxxxxxxxxxxx
-# pc:   0, inst: 0000000000000000
-# pc:   0, inst: xxxxxxxxxxxxxxxx
-# pc:   0, inst: 0000000000000000
-# [ERROR src/Decode.sv]: 145
-# pc:   1, val1:     x
-# pc:   1, val2:    24
-# [ERROR src/Decode.sv]: 145
-# pc:   1, inst: 0101001000011000
-# pc:   2, val1:     0
-# pc:   2, val2:    24
-# pc:   2, inst: 0101001000011000
-# pc:   3, inst: 0000000000000000
-# pc:   4, inst: 0000000000000000
-# pc:   5, inst: 1111111111111111
-# pc:   6, inst: xxxxxxxxxxxxxxxx
+# fval1:     x, fval2:     x
+# fval1:     0, fval2:     0
+# pc:   1
+# is_val1_data_hazard: 0
+# fval1:     0, fval2:     0
+# pc:   2
+# is_val1_data_hazard: 0
+# fval1:     0, fval2:    24
+# pc:   3
+# is_val1_data_hazard: 0
+# fval1:     0, fval2:    12
+# pc:   4
+# fval1:    24, fval2:    24
+# pc:   5
+# fval1:     0, fval2:     0
+# pc:   6
+# fval1:     0, fval2:     0
+# pc:   7
+# fval1:     0, fval2:     0
+# pc:   8
 # =================================
 # memory[ 0]:     x
 # memory[ 1]:    10
@@ -52,8 +55,8 @@
 # =================================
 # =================================
 # regs[ 0]:     0
-# regs[ 1]:     0
-# regs[ 2]:    24
+# regs[ 1]:    48
+# regs[ 2]:    12
 # regs[ 3]:     0
 # regs[ 4]:     0
 # regs[ 5]:     0
@@ -68,7 +71,7 @@
 # regs[14]:     0
 # regs[15]:     0
 # =================================
-# ** Note: $finish    : CPU.sv(81)
-#    Time: 1700 ps  Iteration: 3  Instance: /CPU
-# End time: 14:49:39 on Jan 23,2018, Elapsed time: 0:00:00
+# ** Note: $finish    : CPU.sv(78)
+#    Time: 1500 ps  Iteration: 3  Instance: /CPU
+# End time: 19:06:58 on Jan 23,2018, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0

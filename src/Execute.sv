@@ -16,6 +16,11 @@ module Execute(
     input block val1,
     input block val2,
     input block val3,
+    input bit is_mem_data_hazard,
+    input bit is_val1_data_hazard,
+    input bit is_val2_data_hazard, 
+    
+    input block     mem_value,
 
     output bit       do_halt,
     output bit       do_branch,
@@ -57,14 +62,33 @@ module Execute(
         end
     end
 
+    block fval1;
+    block fval2;
     function block calc();
-        unique case (1'b1)
-            is_sub  : calc = val1 -  val2;
-            is_and  : calc = val1 &  val2;
-            is_or   : calc = val1 |  val2;
-            is_gt   : calc = val1 >  val2;
-            is_eq   : calc = val1 == val2;
-            default : calc = val1 +  val2;
+        if          (is_val1_data_hazard && is_mem_data_hazard) begin
+            fval1 = mem_value;
+        end else if (is_val1_data_hazard && !is_mem_data_hazard) begin
+            fval1 = result;
+        end else if (!is_val1_data_hazard && !is_mem_data_hazard) begin
+            fval1 = val1;
+        end
+
+        if          (is_val2_data_hazard && is_mem_data_hazard) begin
+            fval2 = mem_value;
+        end else if (is_val2_data_hazard && !is_mem_data_hazard) begin
+            fval2 = result;
+        end else if (!is_val2_data_hazard && !is_mem_data_hazard) begin
+            fval2 = val2;
+        end
+
+        $display("fval1: %d, fval2: %d", fval1, fval2);
+        case (1'b1)
+            is_add : calc = fval1 +  fval2;
+            is_sub : calc = fval1 -  fval2;
+            is_and : calc = fval1 &  fval2;
+            is_or  : calc = fval1 |  fval2;
+            is_gt  : calc = fval1 >  fval2;
+            is_eq  : calc = fval1 == fval2;
         endcase
     endfunction
 endmodule

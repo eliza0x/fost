@@ -12,7 +12,7 @@ module Memory(
     input  bit   is_mem_write,
     input  bit   is_reg_write,
 
-    output bit       do_reg_write,
+    output bit       do_mem_reg_write,
     output block     mem_value,
     output bit [3:0] mem_reg_addr,
 
@@ -25,9 +25,9 @@ module Memory(
     block memory[64];
 
     initial begin
-        do_reg_write <= 0;
-        mem_value    <= 0;
-        mem_reg_addr <= 0;
+        do_mem_reg_write <= 0;
+        mem_value        <= 0;
+        mem_reg_addr     <= 0;
         /*
         for (byte i=0; i<64; i++) begin
             memory[i] <= 0;
@@ -38,19 +38,19 @@ module Memory(
 
     always @(posedge clk or negedge rst) begin
         if (!rst) begin
-            do_reg_write <= 0;
-            mem_value    <= 0;
-            mem_reg_addr <= 0;
+            do_mem_reg_write <= 0;
+            mem_value        <= 0;
+            mem_reg_addr     <= 0;
             for (byte i=0; i<64; i++) begin
                 memory[i] <= 0;
             end
         end else if (do_branch) begin
-            do_reg_write <= 0;
-            mem_value    <= 0;
-            mem_reg_addr <= 0;
+            do_mem_reg_write <= 0;
+            mem_value        <= 0;
+            mem_reg_addr     <= 0;
         end else begin
             if (is_mem_read) begin
-                do_reg_write <= is_reg_write;
+                do_mem_reg_write <= is_reg_write;
                 mem_value    <= memory[val1 + val2];
                 mem_reg_addr <= val3;
             end

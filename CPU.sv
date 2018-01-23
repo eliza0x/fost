@@ -1,6 +1,5 @@
 `include "src/PC.sv"
 `include "src/Fetch.sv"
-`include "src/Schedule.sv"
 `include "src/Decode.sv"
 `include "src/Memory.sv"
 `include "src/Execute.sv"
@@ -36,11 +35,15 @@ module CPU(
     bit   is_halt;
     bit   is_branch;
     bit   do_reg_write;
+    bit   do_mem_reg_write;
     bit   do_jump;
     addr  jump_address;
     block val1;
     block val2;
     block val3;
+    bit is_mem_data_hazard;
+    bit is_val1_data_hazard;
+    bit is_val2_data_hazard; 
     block mem_value;
     bit [3:0] mem_reg_addr;
     bit [3:0] exe_reg_addr;
@@ -48,7 +51,6 @@ module CPU(
     block exe_mem_result;
     bit   do_exe_mem_write;
     block exe_mem_addr;
-    bit   consumed_inst;
     bit   is_datahazard_rd;
     bit   is_datahazard_rs;
 
@@ -58,13 +60,8 @@ module CPU(
         .inst(inst_queue[0]),
         .*
     );
-    Schedule schedule_module(
-        .from_inst(inst_queue[0]),
-        .to_inst(inst_queue[1]),
-        .*
-    );
     Decode  decode_module(
-        .inst(inst_queue[1]),
+        .from_inst(inst_queue[0]),
         .*
     );
     Memory  memory_module(.*);
@@ -80,7 +77,7 @@ module CPU(
     always #(one_clock*2) clk = ~clk;
     always @(negedge do_halt) $finish(1);
     always @(posedge clk) begin
-        // $display("pc: %d", pc);
+        $display("pc: %d", pc);
     end
     `endif
 endmodule

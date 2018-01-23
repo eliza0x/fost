@@ -6,7 +6,6 @@ module Fetch(
     input  bit   do_branch,
     input  bit   do_jump,
     input  addr  pc,
-    input  bit  consumed_inst,
     output inst  inst
 );
     `include "./Parameter.sv"
@@ -28,11 +27,12 @@ module Fetch(
         */
 
         memory[0] <= 16'h0000;
-        memory[1] <= 16'b0101_0010_00011000;
-        memory[2] <= 16'b0101_0010_00011000;
-        memory[3] <= 16'h0000; // 16'b0101_0010_00001010;
+        memory[1] <= 16'b0101_0001_00011000;
+        memory[2] <= 16'b0101_0010_00001100;
+        memory[3] <= 16'b0101_0001_00011000;
         memory[4] <= 16'h0000;
-        memory[5] <= 16'hffff;
+        memory[5] <= 16'h0000;
+        memory[6] <= 16'hffff;
     end
 
     always @(posedge clk or negedge rst) begin
