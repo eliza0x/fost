@@ -1,0 +1,222 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/src
+vCPU
+Z1 DXx6 sv_std 3 std 0 22 <EOTafDcUY:cQeO^ICn]m3
+Z2 DXx4 work 11 CPU_sv_unit 0 22 QL1E5`bn4d:5]bJbOc3Q10
+Z3 V`JN@9S9cnhjKRR_L]QIcM3
+r1
+!s85 0
+31
+!i10b 1
+!s100 zJkIcSLbdj0UAZkH[WOZQ2
+I<37ZeVn]a`9S8cRn<he6X0
+Z4 !s105 CPU_sv_unit
+S1
+R0
+Z5 w1516712832
+Z6 8CPU.sv
+Z7 FCPU.sv
+Fsrc/Parameter.sv
+L0 10
+Z8 OV;L;10.3d;59
+Z9 !s108 1516718979.144138
+Z10 !s107 src/Parameter.sv|src/Type.sv|src/Execute.sv|src/Memory.sv|src/Decode.sv|src/Schedule.sv|src/Fetch.sv|src/./Parameter.sv|src/./Type.sv|src/PC.sv|CPU.sv|
+Z11 !s90 -sv|CPU.sv|
+!i113 1
+o-sv
+n@c@p@u
+XCPU_sv_unit
+R1
+VQL1E5`bn4d:5]bJbOc3Q10
+r1
+!s85 0
+31
+!i10b 1
+!s100 Y@N4KEe?GPBkVTOPNkcEk1
+IQL1E5`bn4d:5]bJbOc3Q10
+!i103 1
+S1
+R0
+Z12 w1516718978
+R6
+R7
+Z13 Fsrc/PC.sv
+Fsrc/./Type.sv
+Z14 Fsrc/Fetch.sv
+Z15 Fsrc/Schedule.sv
+Z16 Fsrc/Decode.sv
+Z17 Fsrc/Memory.sv
+Z18 Fsrc/Execute.sv
+Fsrc/Type.sv
+L2 5
+R8
+R9
+R10
+R11
+!i113 1
+o-sv
+n@c@p@u_sv_unit
+vDecode
+R1
+R2
+R3
+r1
+!s85 0
+31
+!i10b 1
+!s100 =Lg;8LRH;Zii6I5c[H9zZ1
+IBC@WYf[[T]oPk1XdJk`Ym2
+R4
+S1
+R0
+R12
+R16
+R6
+R7
+Z19 Fsrc/./Parameter.sv
+L0 3
+R8
+R9
+R10
+R11
+!i113 1
+o-sv
+n@decode
+vExecute
+R1
+R2
+R3
+r1
+!s85 0
+31
+!i10b 1
+!s100 mJO]zIg=ZaAj=:G;Pz<eH3
+IBWZ>EFM=3N8bAL:H^08?a0
+R4
+S1
+R0
+w1516718923
+R18
+R6
+R7
+R19
+L0 3
+R8
+R9
+R10
+R11
+!i113 1
+o-sv
+n@execute
+vFetch
+R1
+R2
+R3
+r1
+!s85 0
+31
+!i10b 1
+!s100 RGQ[@1<FLO6OEbRcHGzES0
+If4?z34oJ1ahZnLJTmFZjY3
+R4
+S1
+R0
+w1516718739
+R14
+R6
+R7
+R19
+L0 3
+R8
+R9
+R10
+R11
+!i113 1
+o-sv
+n@fetch
+vMemory
+R1
+R2
+R3
+r1
+!s85 0
+31
+!i10b 1
+!s100 ^0E_LeJf4TT7En]FZG?Io0
+I0c4jEWWzAFV8^CDQcOOb_2
+R4
+S1
+R0
+R5
+R17
+R6
+R7
+R19
+L0 3
+R8
+R9
+R10
+R11
+!i113 1
+o-sv
+n@memory
+vPC
+R1
+R2
+R3
+r1
+!s85 0
+31
+!i10b 1
+!s100 K93T7=<hF]6DBhnoBlgk71
+I;Y4=S9l9YFX8kH;`m_cg_2
+R4
+S1
+R0
+w1516712857
+R13
+R6
+R7
+R19
+L0 3
+R8
+R9
+R10
+R11
+!i113 1
+o-sv
+n@p@c
+vSchedule
+R1
+R2
+R3
+r1
+!s85 0
+31
+!i10b 1
+!s100 <[<U1dN7aOVbSm5EOX14i3
+IK6J<R0U^[cM<F<UVflaG40
+R4
+S1
+R0
+w1516718916
+R15
+R6
+R7
+R19
+L0 3
+R8
+R9
+R10
+R11
+!i113 1
+o-sv
+n@schedule
