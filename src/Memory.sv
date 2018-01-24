@@ -1,8 +1,8 @@
 `include "./Type.sv"
 
 module Memory(
-    input  wire  rst,
-    input  wire  clk,
+    input  bit  rst,
+    input  bit  clk,
     input  bit   do_halt,
     input  bit   do_branch,
     input  block val1,
@@ -26,7 +26,8 @@ module Memory(
 );
     `include "./Parameter.sv"
     
-    block memory[64];
+    // block memory[64];
+    block memory[2];
 
     initial begin
         do_mem_reg_write <= 0;
@@ -44,6 +45,9 @@ module Memory(
         memory[7] <= 100;
         memory[8] <= 1;
         */
+
+        memory[0] <= 30000;
+        memory[1] <= 10;
     end
 
     always @(posedge clk or negedge rst) begin
@@ -51,7 +55,7 @@ module Memory(
             do_mem_reg_write <= 0;
             mem_value        <= 0;
             mem_reg_addr     <= 0;
-            for (byte i=0; i<64; i++) begin
+            for (byte i=0; i<2; i++) begin
                 memory[i] <= 0;
             end
         end else if (do_branch) begin
@@ -81,4 +85,3 @@ module Memory(
     end
 
 endmodule
-

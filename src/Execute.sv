@@ -1,8 +1,8 @@
 `include "./Type.sv"
 
 module Execute(
-    input wire  rst,
-    input wire  clk,
+    input bit   rst,
+    input bit   clk,
     input bit   is_add,
     input bit   is_sub,
     input bit   is_and,

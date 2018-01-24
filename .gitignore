@@ -1,4 +1,11 @@
-work/
+CPU.qpf
+CPU.qsf
+*.bak
+db
+incremental_db
+output_files
+simulation
 transcript
 vish_stacktrace.vstf
 vsim.wlf
+work

@@ -1,10 +1,10 @@
 `include "./Type.sv"
 
 module Decode(
-    input  wire  rst,
-    input  wire  clk,
-    input  wire  do_branch,
-    input  inst  from_inst,
+    input  bit   rst,
+    input  bit   clk,
+    input  bit   do_branch,
+    input  Inst  from_inst,
     input  bit   do_halt,
     output bit   is_add,
     output bit   is_sub,
@@ -31,7 +31,8 @@ module Decode(
 
     input bit       do_exe_reg_write,
     input bit [3:0] exe_reg_addr,
-    input block     result
+    input block result,
+    output block data0,data1,data2,data3,data4,data5,data6,data7
 );
     `include "./Parameter.sv"
 
@@ -40,7 +41,7 @@ module Decode(
     bit   is_datahazard_rd;
     bit   is_datahazard_rs;
 
-    inst to_inst;
+    Inst to_inst;
     assign is_datahazard_rd =
            (from_inst.inst[op_begin:op_end] != 4'b0000)
         && (from_inst.inst[rd_begin:rd_end] == to_inst.inst[rd_begin:rd_end]);
@@ -94,7 +95,7 @@ module Decode(
             for (byte i=0; i<16; i++) begin
                 regs[i] <= 0;
             end
-        end else if (do_branch || do_jump) begin
+        end else if (do_branch) begin
             is_add       <= 1;
             is_sub       <= 0;
             is_and       <= 0;
@@ -112,6 +113,29 @@ module Decode(
             val2         <= 0;
             val3         <= 0;
             to_inst      <= 0;
+        end else if (do_jump) begin
+            is_add       <= 1;
+            is_sub       <= 0;
+            is_and       <= 0;
+            is_or        <= 0;
+            is_gt        <= 0;
+            is_eq        <= 0;
+            is_mem_read  <= 0;
+            is_mem_write <= 0;
+            is_reg_write <= 0;
+            is_halt      <= 1;
+            is_branch    <= 0;
+            do_jump      <= 0;
+            jump_address <= 0;
+            val1         <= 0;
+            val2         <= 0;
+            val3         <= 0;
+            to_inst      <= 0;
+            if (do_mem_reg_write) begin
+                regs[mem_reg_addr] <= mem_value;
+            end else if (do_exe_reg_write) begin
+                regs[exe_reg_addr] <= result;
+            end
         end else begin
             unique case (from_inst.inst[op_begin:op_end])
                 4'b0001: add();
@@ -133,7 +157,6 @@ module Decode(
             if (do_mem_reg_write) begin
                 regs[mem_reg_addr] <= mem_value;
             end else if (do_exe_reg_write) begin
-                if (exe_reg_addr == 4) $display(":::::::::: %d", result);
                 regs[exe_reg_addr] <= result;
             end
             to_inst <= from_inst;
@@ -491,4 +514,13 @@ module Decode(
         is_val1_data_hazard = 0;
         is_val2_data_hazard = 0;
     endfunction
+
+    assign data0 = regs[1];
+    assign data1 = regs[2];
+    assign data2 = regs[3];
+    assign data3 = regs[4];
+    assign data4 = regs[5];
+    assign data5 = regs[6];
+    assign data6 = regs[7];
+    assign data7 = regs[8];
 endmodule

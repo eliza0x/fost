@@ -1,5 +1,5 @@
 # vsim -c -keepstdout -do "add wave *;run -all;quit" fib 
-# Start time: 09:05:20 on Jan 24,2018
+# Start time: 18:52:46 on Jan 24,2018
 # Loading sv_std.std
 # Loading work.fib_sv_unit
 # Loading work.fib
@@ -9,20 +9,24 @@
 # Loading work.Decode
 # Loading work.Memory
 # Loading work.Execute
+# Loading work.display_7seg
+# Loading work.display_module_async
+# Loading work.dynamic_display
+# Loading work.displayIK_7seg_8
+# Loading work.display_module_async_16b
+# Loading work.dynamic_displayIK_8
 # add wave *
 # run -all
 # do_halt: 0
-# pc:   0
 # do_halt: 1
+# pc:   0
 # pc:   0
 # pc:   1
 # pc:   2
 # pc:   3
 # pc:   4
 # pc:   5
-# ::::::::::     0
 # pc:   6
-# ::::::::::     1
 # pc:   7
 # pc:   8
 # pc:   9
@@ -31,9 +35,7 @@
 # pc:   0
 # pc:   4
 # pc:   5
-# ::::::::::     0
 # pc:   6
-# ::::::::::     2
 # pc:   7
 # pc:   8
 # pc:   9
@@ -42,9 +44,7 @@
 # pc:   0
 # pc:   4
 # pc:   5
-# ::::::::::     0
 # pc:   6
-# ::::::::::     3
 # pc:   7
 # pc:   8
 # pc:   9
@@ -53,9 +53,7 @@
 # pc:   0
 # pc:   4
 # pc:   5
-# ::::::::::     0
 # pc:   6
-# ::::::::::     5
 # pc:   7
 # pc:   8
 # pc:   9
@@ -64,9 +62,7 @@
 # pc:   0
 # pc:   4
 # pc:   5
-# ::::::::::     0
 # pc:   6
-# ::::::::::     8
 # pc:   7
 # pc:   8
 # pc:   9
@@ -75,8 +71,8 @@
 # pc:  12
 # pc:  13
 # =================================
-# memory[ 0]:     x
-# memory[ 1]:     x
+# memory[ 0]: 30000
+# memory[ 1]:    10
 # memory[ 2]:     x
 # memory[ 3]:     x
 # memory[ 4]:     x
@@ -101,13 +97,9 @@
 # regs[ 6]:     0
 # regs[ 7]:     0
 # =================================
-# ** Error: Assertion error.
-#    Time: 10700 ps  Scope: fib File: test/fib.sv Line: 30
-# ** Error: Assertion error.
-#    Time: 10700 ps  Scope: fib File: test/fib.sv Line: 31
 # regs[1]:     8
 # regs[2]:    13
-# ** Note: $finish    : test/fib.sv(36)
-#    Time: 10700 ps  Iteration: 2  Instance: /fib
-# End time: 09:05:20 on Jan 24,2018, Elapsed time: 0:00:00
+# ** Note: $finish    : test/fib.sv(34)
+#    Time: 10900 ps  Iteration: 2  Instance: /fib
+# End time: 18:52:46 on Jan 24,2018, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0

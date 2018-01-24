@@ -1,8 +1,8 @@
 `include "./Type.sv"
 
 module PC(
-    input  wire rst,
-    input  wire clk,
+    input  bit  rst,
+    input  bit  clk,
     input  bit  do_branch,
     input  addr branch_address,
     input  bit  do_jump,

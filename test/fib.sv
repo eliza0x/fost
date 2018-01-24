@@ -6,8 +6,11 @@ module fib();
     bit CLK;
     bit rst;
     bit do_halt;
+    logic [7:0] SEG_A,SEG_B,SEG_C,SEG_D,SEG_E,SEG_F,SEG_G,SEG_H;
+    logic [8:0] SEG_SEL_IK;
     logic [7:0] SEG;
     logic [3:0] SEG_SEL;
+
 
     CPU cpu(.*);
 
