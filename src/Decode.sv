@@ -47,7 +47,7 @@ module Decode(
         && (from_inst.inst[rd_begin:rd_end] == to_inst.inst[rd_begin:rd_end]);
 
     assign is_datahazard_rs = 
-           (from_inst.inst[op_begin:op_end] == 4'b0000)
+           (from_inst.inst[op_begin:op_end] != 4'b0000)
         && (from_inst.inst[rs_begin:rs_end] == to_inst.inst[rd_begin:rd_end]);
 
     initial begin
@@ -160,28 +160,28 @@ module Decode(
                 regs[exe_reg_addr] <= result;
             end
             to_inst <= from_inst;
-            is_mem_data_hazard = (to_inst.inst[op_begin:op_end]==4'b1000) 
-                              || (to_inst.inst[op_begin:op_end]==4'b1001);
-            $display("pc: %d", from_inst.pc);
+            is_mem_data_hazard = to_inst.inst[op_begin:op_end]==4'b1001;
         end
     end
 
     function block rd();
-        if      (do_exe_reg_write && from_inst.inst[rd_begin:rd_end] == exe_reg_addr)
+        if      (do_exe_reg_write && from_inst.inst[rd_begin:rd_end] == exe_reg_addr) begin
             rd = result;
-        else if (do_mem_reg_write && from_inst.inst[rd_begin:rd_end] == mem_reg_addr)
+        end else if (do_mem_reg_write && from_inst.inst[rd_begin:rd_end] == mem_reg_addr) begin
             rd = mem_value;
-        else 
+        end else begin
             rd = regs[from_inst.inst[rd_begin:rd_end]];
+        end
     endfunction
 
     function block rs();
-        if      (do_exe_reg_write && from_inst.inst[rs_begin:rs_end] == exe_reg_addr)
+        if      (do_exe_reg_write && from_inst.inst[rs_begin:rs_end] == exe_reg_addr) begin
             rs = result;
-        else if (do_mem_reg_write && from_inst.inst[rs_begin:rs_end] == mem_reg_addr)
+        end else if (do_mem_reg_write && from_inst.inst[rs_begin:rs_end] == mem_reg_addr) begin
             rs = mem_value;
-        else 
+        end else begin
             rs = regs[from_inst.inst[rs_begin:rs_end]];
+        end
     endfunction
 
     function void nop();
@@ -225,6 +225,8 @@ module Decode(
         val1 = rd();
         val2 = rs();
         val3 = from_inst.inst[rd_begin:rd_end];
+        $display("add rd: %d", rd());
+        $display("add rs: %d", rs());
     endfunction
 
     function void sub();
@@ -360,21 +362,24 @@ module Decode(
     endfunction
 
     function void ldi();
-        is_add        = 0;
+        is_add        = 1;
         is_sub        = 0;
         is_and        = 0;
         is_or         = 0;
         is_gt         = 0;
         is_eq         = 0;
-        is_mem_read   = 1;
+        is_mem_read   = 0;
         is_mem_write  = 0;
         is_reg_write  = 1;
         is_halt       = 1;
         do_jump       = 0;
         is_branch     = 0;
         jump_address  = 0;
-        val1 = from_inst.inst[rs_begin:rt_end];
-        val2 = 16'd0;
+        `define h from_inst.inst[rs_begin]
+        val1 = {`h,`h,`h,`h,`h,`h,`h,`h,
+                from_inst.inst[rs_begin:rt_end]};
+        `undef h
+        val2 = 0;
         val3 = from_inst.inst[rd_begin:rd_end];
         is_val1_data_hazard = 0;
         is_val2_data_hazard = 0;

@@ -29,7 +29,7 @@ module Fetch(
         memory[11] <= 16'b1111111111111111   ; // halt
         */
 
-        /* Q1 */
+        /* Q1
         memory[ 0] <= 16'h0000;
         memory[ 1] <= 16'b0101_0001_00000001 ; // addi
         memory[ 2] <= 16'b0101_0010_01111111 ; // ldi
@@ -58,7 +58,7 @@ module Fetch(
         memory[25] <= 16'b0011_0010_0000_0000; // and
         memory[26] <= 16'b0001_0010_0100_0000; // add
         memory[27] <= 16'b1111111111111111   ; // halt
-        /* */
+        */
     end
 
     always @(posedge clk or negedge rst) begin

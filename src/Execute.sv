@@ -79,19 +79,27 @@ module Execute(
     function block calc();
         if          (is_val1_data_hazard && is_mem_data_hazard) begin
             fval1 = mem_value;
+            $display("xxxxxxxxxxxxxxxxxxxx");
         end else if (is_val1_data_hazard && !is_mem_data_hazard) begin
             fval1 = result;
+            $display("yyyyyyyyyyyyyyyyyyyy");
         end else begin
             fval1 = val1;
+            $display("zzzzzzzzzzzzzzzzzzzz");
         end
 
         if          (is_val2_data_hazard && is_mem_data_hazard) begin
+            $display("xxxxxxxxxxxxxxxxxxxx");
             fval2 = mem_value;
         end else if (is_val2_data_hazard && !is_mem_data_hazard) begin
+            $display("yyyyyyyyyyyyyyyyyyyy");
             fval2 = result;
         end else begin
+            $display("zzzzzzzzzzzzzzzzzzzz");
             fval2 = val2;
         end
+
+        $display("fval1: %d, fval2: %d", fval1, fval2);
 
         case (1'b1)
             is_add : calc = fval1 +  fval2;
