@@ -23,6 +23,16 @@ module Q1();
             $display("regs[%2d]: %d", i, cpu.decode_module.regs[i]);
         end
         $display("=================================");
+
+        // sum: 2
+        // a:   1
+        // n:   3
+        assert(cpu.decode_module.regs[1] == 245);
+        assert(cpu.decode_module.regs[2] == 29890);
+        $display("regs[1]: %d", cpu.decode_module.regs[1]);
+        $display("regs[2]: %d", cpu.decode_module.regs[2]);
+        // $display("regs[3]: %d", cpu.decode_module.regs[3]);
+
         $finish(1);
     end
 
@@ -30,6 +40,8 @@ module Q1();
         $display("do_halt: %d", do_halt);
         board_ck = 1'b0;
         rst = 1;
+        cpu.memory_module.memory[0] <= 30000;
+        cpu.memory_module.memory[1] <= 10;
 
         cpu.fetch_module.memory[ 0] <= 16'h0000;
         cpu.fetch_module.memory[ 1] <= 16'b0101_0001_00000001 ; // addi
@@ -43,16 +55,5 @@ module Q1();
         cpu.fetch_module.memory[ 9] <= 16'b0011_0010_0000_0000; // and
         cpu.fetch_module.memory[ 10] <= 16'b0001_0010_0100_0000; // add
         cpu.fetch_module.memory[11] <= 16'b1111111111111111   ; // halt
-
-        #(one_clock*5000)
-
-        // sum: 2
-        // a:   1
-        // n:   3
-        assert(cpu.decode_module.regs[1] == 245);
-        assert(cpu.decode_module.regs[2] == 29890);
-        $display("regs[1]: %d", cpu.decode_module.regs[1]);
-        $display("regs[2]: %d", cpu.decode_module.regs[2]);
-        $display("regs[3]: %d", cpu.decode_module.regs[3]);
     end
 endmodule

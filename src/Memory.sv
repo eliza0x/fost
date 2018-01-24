@@ -36,9 +36,6 @@ module Memory(
         for (byte i=0; i<64; i++) begin
             memory[i] <= 0;
         end
-        */
-        memory[0] <= 30000;
-        memory[1] <= 10;
         memory[2] <= 6;
         memory[3] <= 4;
         memory[4] <= 3;
@@ -46,7 +43,7 @@ module Memory(
         memory[6] <= 5;
         memory[7] <= 100;
         memory[8] <= 1;
-
+        */
     end
 
     always @(posedge clk or negedge rst) begin

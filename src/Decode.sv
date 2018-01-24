@@ -94,7 +94,7 @@ module Decode(
             for (byte i=0; i<16; i++) begin
                 regs[i] <= 0;
             end
-        end else if (do_branch) begin
+        end else if (do_branch || do_jump) begin
             is_add       <= 1;
             is_sub       <= 0;
             is_and       <= 0;
@@ -133,6 +133,7 @@ module Decode(
             if (do_mem_reg_write) begin
                 regs[mem_reg_addr] <= mem_value;
             end else if (do_exe_reg_write) begin
+                if (exe_reg_addr == 4) $display(":::::::::: %d", result);
                 regs[exe_reg_addr] <= result;
             end
             to_inst <= from_inst;
@@ -447,7 +448,7 @@ module Decode(
     endfunction
 
     function void jump();
-        is_add        = 1;
+        is_add        = 0;
         is_sub        = 0;
         is_and        = 0;
         is_or         = 0;
@@ -459,16 +460,15 @@ module Decode(
         is_halt       = 1;
         is_branch     = 0;
         do_jump       = 1;
-        `define h regs[from_inst.inst[i9_begin:i9_end]]
+        `define h from_inst.inst[i9_begin]
         jump_address  = {`h,`h,`h,`h,`h,`h,`h,
-            regs[from_inst.inst[i9_begin:i9_end]]};
+            from_inst.inst[i9_begin:i9_end]} + from_inst.pc;
         `undef h
         val1          = 0;
         val2          = 0;
         val3          = 0;
         is_val1_data_hazard = 0;
         is_val2_data_hazard = 0;
-        $display("[ERROR %d]: ", `__LINE__);
     endfunction
 
     function void halt();
@@ -491,5 +491,4 @@ module Decode(
         is_val1_data_hazard = 0;
         is_val2_data_hazard = 0;
     endfunction
-
 endmodule
