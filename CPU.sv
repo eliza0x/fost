@@ -7,13 +7,16 @@
 `include "src/Type.sv"
 
 module CPU(
-    input  bit clk,
+    input  bit board_ck,
     input  bit CLK,
     input  bit rst,
     output bit do_halt,
     output logic [7:0] SEG,
     output logic [3:0] SEG_SEL
 );
+    bit clk;
+    assign clk = board_ck & do_halt;
+    always @(do_halt) $display("do_halt: %d", do_halt);
     
     `include "src/Parameter.sv"
 
@@ -66,32 +69,4 @@ module CPU(
     );
     Memory  memory_module(.*);
     Execute execute_module(.*);
-
-    `define DEBUG
-    `ifdef DEBUG
-    initial begin
-        $display("do_halt: %d", do_halt);
-        clk = 1'b0;
-        rst = 1;
-
-        fetch_module.memory[0] <= 16'h0000;
-        fetch_module.memory[1] <= 16'b1000_0010_00000001; // $2 = 10
-        fetch_module.memory[2] <= 16'b0101_0010_00001010; // $2 += 10
-        fetch_module.memory[3] <= 16'b1010_0010_00000010; // $2 = 10
-        fetch_module.memory[4] <= 16'b1111_1111_1111_1111;// halt
-    end
-    always #(one_clock*2) clk = ~clk;
-    always @(negedge do_halt) begin
-        $display("=================================");
-        for (byte i=0; i<20; i++) begin
-            $display("memory[%2d]: %d", i, memory_module.memory[i]);
-        end
-        $display("--------------------------------");
-        for (byte i=0; i<16; i++) begin
-            $display("regs[%2d]: %d", i, decode_module.regs[i]);
-        end
-        $display("=================================");
-        $finish(1);
-    end
-    `endif
 endmodule

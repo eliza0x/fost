@@ -1,7 +1,8 @@
-# vsim -c -keepstdout -do "add wave *;run -all;quit" CPU 
-# Start time: 00:22:30 on Jan 24,2018
+# vsim -c -keepstdout -do "add wave *;run -all;quit" Add1 
+# Start time: 01:18:19 on Jan 24,2018
 # Loading sv_std.std
-# Loading work.CPU_sv_unit
+# Loading work.Add1_sv_unit
+# Loading work.Add1
 # Loading work.CPU
 # Loading work.PC
 # Loading work.Fetch
@@ -11,10 +12,23 @@
 # add wave *
 # run -all
 # do_halt: 0
+# do_halt: 1
+# pc:   1
+# pc:   2
+# pc:   3
+# ldildildildildildildildildildildildildildildildildildildildildildildildildildildildildildi
+# val1:   0
+# inst: 1000001000000000
+# pc:   4
+# rrrrrrrrrrrrrrrrrrrr: 30000(    0)
+# is_reg_write: 1
+# pc:   5
+# &&&&&&&&&&&&( 2): 30000
+# pc:   6
 # =================================
-# memory[ 0]:     x
+# memory[ 0]: 30000
 # memory[ 1]:    10
-# memory[ 2]:    20
+# memory[ 2]:     x
 # memory[ 3]:     x
 # memory[ 4]:     x
 # memory[ 5]:     x
@@ -22,20 +36,10 @@
 # memory[ 7]:     x
 # memory[ 8]:     x
 # memory[ 9]:     x
-# memory[10]:     x
-# memory[11]:     x
-# memory[12]:     x
-# memory[13]:     x
-# memory[14]:     x
-# memory[15]:     x
-# memory[16]:     x
-# memory[17]:     x
-# memory[18]:     x
-# memory[19]:     x
 # --------------------------------
 # regs[ 0]:     0
-# regs[ 1]:     0
-# regs[ 2]:    20
+# regs[ 1]:     1
+# regs[ 2]: 30000
 # regs[ 3]:     0
 # regs[ 4]:     0
 # regs[ 5]:     0
@@ -50,7 +54,7 @@
 # regs[14]:     0
 # regs[15]:     0
 # =================================
-# ** Note: $finish    : CPU.sv(94)
-#    Time: 1300 ps  Iteration: 2  Instance: /CPU
-# End time: 00:22:30 on Jan 24,2018, Elapsed time: 0:00:00
+# ** Note: $finish    : test/Add1.sv(30)
+#    Time: 1100 ps  Iteration: 2  Instance: /Add1
+# End time: 01:18:19 on Jan 24,2018, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0

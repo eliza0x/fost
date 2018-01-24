@@ -31,7 +31,7 @@ module Execute(
     output bit [3:0] exe_reg_addr
 );
     `include "./Parameter.sv"
-    bit   store_is_halt;
+    bit   store_is_halt = 1;
     initial begin
         result         <= 0;
         do_branch      <= 0;
@@ -55,6 +55,14 @@ module Execute(
             exe_reg_addr   <= 0;
             do_exe_reg_write <= 0;
             store_is_halt    <= 1;
+        end else if (do_branch) begin
+            do_branch      <= 0;
+            branch_address <= 0; 
+            do_halt        <= 1;
+            result         <= 0;
+            exe_reg_addr   <= 0;
+            do_exe_reg_write <= 0;
+            store_is_halt    <= 1;
         end else begin
             store_is_halt    <= is_halt;
             do_halt          <= store_is_halt;
@@ -63,6 +71,9 @@ module Execute(
             result           <= calc();
             exe_reg_addr     <= val3;
             do_exe_reg_write <= is_reg_write;
+            if (is_branch) begin
+                $display("do branch? calc(): %d", calc());
+            end
         end
     end
 

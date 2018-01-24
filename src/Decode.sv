@@ -15,7 +15,7 @@ module Decode(
     output bit   is_mem_read,
     output bit   is_mem_write,
     output bit   is_reg_write,
-    output bit   is_halt,
+    output bit   is_halt = 1,
     output bit   is_branch,
     output bit   do_jump,
     output addr  jump_address,
@@ -134,9 +134,9 @@ module Decode(
                 default: nop();
             endcase
             if (do_mem_reg_write) begin
+                $display("&&&&&&&&&&&&(%d): %d", mem_reg_addr, mem_value);
                 regs[mem_reg_addr] <= mem_value;
-            end 
-            if (do_exe_reg_write) begin
+            end else if (do_exe_reg_write) begin
                 regs[exe_reg_addr] <= result;
             end
             to_inst <= from_inst;
@@ -340,6 +340,9 @@ module Decode(
     endfunction
 
     function void ldi();
+        $display("ldildildildildildildildildildildildildildildildildildildildildildildildildildildildildildi");
+        $display("val1: %d",  from_inst.inst[rs_begin:rt_end]);
+        $display("inst: %b",  from_inst.inst);
         is_add        = 0;
         is_sub        = 0;
         is_and        = 0;

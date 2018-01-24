@@ -56,7 +56,6 @@ module Memory(
         end else begin
             if (is_mem_read) begin
                 $display("rrrrrrrrrrrrrrrrrrrr: %d(%d)",memory[val1+val2], val1+val2);
-                $display("is_reg_write: %d",is_reg_write);
                 do_mem_reg_write <= is_reg_write;
                 mem_value    <= memory[val1 + val2];
                 mem_reg_addr <= val3;
