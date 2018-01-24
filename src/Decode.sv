@@ -375,7 +375,7 @@ module Decode(
         do_jump       = 0;
         is_branch     = 0;
         jump_address  = 0;
-        `define h from_inst.inst[rs_begin]
+        `define h 0
         val1 = {`h,`h,`h,`h,`h,`h,`h,`h,
                 from_inst.inst[rs_begin:rt_end]};
         `undef h
