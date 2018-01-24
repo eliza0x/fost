@@ -85,7 +85,6 @@ module Execute(
             fval2 = val2;
         end
 
-        $display("fval1: %d, fval2: %d", fval1, fval2);
         case (1'b1)
             is_add : calc = fval1 +  fval2;
             is_sub : calc = fval1 -  fval2;

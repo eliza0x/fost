@@ -77,7 +77,8 @@ module CPU(
         fetch_module.memory[0] <= 16'h0000;
         fetch_module.memory[1] <= 16'b1000_0010_00000001; // $2 = 10
         fetch_module.memory[2] <= 16'b0101_0010_00001010; // $2 += 10
-        fetch_module.memory[3] <= 16'b1111_1111_1111_1111;// halt
+        fetch_module.memory[3] <= 16'b1010_0010_00000010; // $2 = 10
+        fetch_module.memory[4] <= 16'b1111_1111_1111_1111;// halt
     end
     always #(one_clock*2) clk = ~clk;
     always @(negedge do_halt) begin
@@ -91,9 +92,6 @@ module CPU(
         end
         $display("=================================");
         $finish(1);
-    end
-    always @(posedge clk) begin
-        $display("pc: %d", pc);
     end
     `endif
 endmodule

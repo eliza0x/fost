@@ -12,6 +12,10 @@ module Memory(
     input  bit   is_mem_write,
     input  bit   is_reg_write,
 
+    input  bit is_mem_data_hazard,
+    input  bit   is_val2_data_hazard,
+    input  block result,
+
     output bit       do_mem_reg_write,
     output block     mem_value,
     output bit [3:0] mem_reg_addr,
@@ -59,8 +63,13 @@ module Memory(
                 mem_reg_addr     <= 0;
             end
             if (is_mem_write) begin
-                $display("!!!!!!!!!!!! val(%d+%d): %d", val1, val2, val3);
-                memory[val1+val2] <= val3;
+                if          (is_val2_data_hazard && is_mem_data_hazard) begin
+                    memory[val1+val3] <= mem_value;
+                end else if (is_val2_data_hazard && !is_mem_data_hazard) begin
+                    memory[val1+val3] <= result;
+                end else begin
+                    memory[val1+val3] <= val2;
+                end
             end
         end
     end

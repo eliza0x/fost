@@ -1,5 +1,5 @@
 # vsim -c -keepstdout -do "add wave *;run -all;quit" CPU 
-# Start time: 21:36:01 on Jan 23,2018
+# Start time: 00:22:30 on Jan 24,2018
 # Loading sv_std.std
 # Loading work.CPU_sv_unit
 # Loading work.CPU
@@ -11,23 +11,10 @@
 # add wave *
 # run -all
 # do_halt: 0
-# fval1:     x, fval2:     x
-# fval1:     0, fval2:     0
-# pc:   1
-# fval1:     0, fval2:     0
-# pc:   2
-# fval1:     1, fval2:     0
-# pc:   3
-# fval1:    10, fval2:    10
-# pc:   4
-# fval1:     0, fval2:     0
-# pc:   5
-# fval1:     0, fval2:     0
-# pc:   6
 # =================================
 # memory[ 0]:     x
 # memory[ 1]:    10
-# memory[ 2]:     x
+# memory[ 2]:    20
 # memory[ 3]:     x
 # memory[ 4]:     x
 # memory[ 5]:     x
@@ -63,7 +50,7 @@
 # regs[14]:     0
 # regs[15]:     0
 # =================================
-# ** Note: $finish    : CPU.sv(93)
-#    Time: 1100 ps  Iteration: 2  Instance: /CPU
-# End time: 21:36:01 on Jan 23,2018, Elapsed time: 0:00:00
+# ** Note: $finish    : CPU.sv(94)
+#    Time: 1300 ps  Iteration: 2  Instance: /CPU
+# End time: 00:22:30 on Jan 24,2018, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0

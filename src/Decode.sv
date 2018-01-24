@@ -396,10 +396,10 @@ module Decode(
         is_branch     = 0;
         jump_address  = 0;
         val1 = rs();
-        val2 = from_inst.inst[rt_begin:rt_end];
-        val3 = rd();
+        val2 = rd();
+        val3 = from_inst.inst[rt_begin:rt_end];
         is_val1_data_hazard = is_datahazard_rs;
-        is_val2_data_hazard = 0;
+        is_val2_data_hazard = is_datahazard_rd;
     endfunction
 
     function void beq();
