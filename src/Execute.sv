@@ -70,10 +70,7 @@ module Execute(
             branch_address   <= val3;
             result           <= calc();
             exe_reg_addr     <= val3;
-            do_exe_reg_write <= is_reg_write;
-            if (is_branch) begin
-                $display("do branch? calc(): %d", calc());
-            end
+            do_exe_reg_write <= is_reg_write && !is_branch;
         end
     end
 

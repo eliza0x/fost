@@ -39,6 +39,14 @@ module Memory(
         */
         memory[0] <= 30000;
         memory[1] <= 10;
+        memory[2] <= 6;
+        memory[3] <= 4;
+        memory[4] <= 3;
+        memory[5] <= 2;
+        memory[6] <= 5;
+        memory[7] <= 100;
+        memory[8] <= 1;
+
     end
 
     always @(posedge clk or negedge rst) begin
@@ -55,8 +63,6 @@ module Memory(
             mem_reg_addr     <= 0;
         end else begin
             if (is_mem_read) begin
-                $display("rrrrrrrrrrrrrrrrrrrr: %d(%d)",memory[val1+val2], val1+val2);
-                $display("is_reg_write: %d",is_reg_write);
                 do_mem_reg_write <= is_reg_write;
                 mem_value    <= memory[val1 + val2];
                 mem_reg_addr <= val3;

@@ -112,9 +112,6 @@ module Decode(
             val2         <= 0;
             val3         <= 0;
             to_inst      <= 0;
-            for (byte i=0; i<16; i++) begin
-                regs[i] <= 0;
-            end
         end else begin
             unique case (from_inst.inst[op_begin:op_end])
                 4'b0001: add();
@@ -134,7 +131,6 @@ module Decode(
                 default: nop();
             endcase
             if (do_mem_reg_write) begin
-                $display("&&&&&&&&&&&&(%d): %d", mem_reg_addr, mem_value);
                 regs[mem_reg_addr] <= mem_value;
             end else if (do_exe_reg_write) begin
                 regs[exe_reg_addr] <= result;
@@ -142,6 +138,7 @@ module Decode(
             to_inst <= from_inst;
             is_mem_data_hazard = (to_inst.inst[op_begin:op_end]==4'b1000) 
                               || (to_inst.inst[op_begin:op_end]==4'b1001);
+            $display("pc: %d", from_inst.pc);
         end
     end
 
@@ -291,7 +288,6 @@ module Decode(
         val3 = from_inst.inst[rd_begin:rd_end];
         is_val1_data_hazard = is_datahazard_rd;
         is_val2_data_hazard = 0;
-        // $display("is_val1_data_hazard: %d", is_datahazard_rd);
     endfunction
 
     function void subi();
@@ -340,9 +336,6 @@ module Decode(
     endfunction
 
     function void ldi();
-        $display("ldildildildildildildildildildildildildildildildildildildildildildildildildildildildildildi");
-        $display("val1: %d",  from_inst.inst[rs_begin:rt_end]);
-        $display("inst: %b",  from_inst.inst);
         is_add        = 0;
         is_sub        = 0;
         is_and        = 0;
@@ -498,4 +491,5 @@ module Decode(
         is_val1_data_hazard = 0;
         is_val2_data_hazard = 0;
     endfunction
+
 endmodule
