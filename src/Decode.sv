@@ -225,8 +225,6 @@ module Decode(
         val1 = rd();
         val2 = rs();
         val3 = from_inst.inst[rd_begin:rd_end];
-        $display("add rd: %d", rd());
-        $display("add rs: %d", rs());
     endfunction
 
     function void sub();
@@ -375,7 +373,7 @@ module Decode(
         do_jump       = 0;
         is_branch     = 0;
         jump_address  = 0;
-        `define h 0
+        `define h 1'b0
         val1 = {`h,`h,`h,`h,`h,`h,`h,`h,
                 from_inst.inst[rs_begin:rt_end]};
         `undef h
@@ -528,4 +526,7 @@ module Decode(
     assign data5 = regs[6];
     assign data6 = regs[7];
     assign data7 = regs[8];
+
+    always @(regs[1]) $display("regs[1]: %d", regs[1]);
+
 endmodule

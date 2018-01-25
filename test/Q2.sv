@@ -11,6 +11,7 @@ module Q2();
     logic [7:0] SEG;
     logic [3:0] SEG_SEL;
 
+
     CPU cpu(.*);
 
     always #(one_clock*2) board_ck = ~board_ck;
@@ -26,12 +27,11 @@ module Q2();
         end
         $display("=================================");
 
-        assert(cpu.decode_module.regs[10] == 624);
+        assert(cpu.decode_module.regs[1] == 624);
         assert(cpu.decode_module.regs[7] == 16'b0000000000000_111);
-        $display("regs[ 7]: %d", cpu.decode_module.regs[7]);
-        $display("regs[10]: %d", cpu.decode_module.regs[10]);
-        $display("regs[ 8]: %d", cpu.decode_module.regs[ 8]);
-        $display("regs[ 9]: %d", cpu.decode_module.regs[ 9]);
+        $display("regs[1]: %d", cpu.decode_module.regs[1]);
+        $display("regs[7]: %d", cpu.decode_module.regs[7]);
+        $display("cnt: %d", cpu.cnt);
         $finish(1);
     end
 
@@ -39,40 +39,43 @@ module Q2();
         $display("do_halt: %d", do_halt);
         board_ck = 1'b0;
         rst = 1;
-        cpu.memory_module.memory[50] <= 1;
-        cpu.memory_module.memory[51] <= 100;
+        cpu.memory_module.memory[6] <= 1;
+        cpu.memory_module.memory[7] <= 100;
 
-        cpu.fetch_module.memory[ 0] <= 16'b0011_0010_0000_0000; // and
-        cpu.fetch_module.memory[ 1] <= 16'b0101_0010_00001000 ; // addi
-        cpu.fetch_module.memory[ 2] <= 16'b0011_0011_0000_0000; // and
-        cpu.fetch_module.memory[ 3] <= 16'b0101_0011_00000001 ; // addi
-        cpu.fetch_module.memory[ 4] <= 16'b0011_0100_0000_0000; // and
-        cpu.fetch_module.memory[ 5] <= 16'b0011_0101_0000_0000; // and
-        cpu.fetch_module.memory[ 6] <= 16'b0001_0101_0011_0000; // add
-        cpu.fetch_module.memory[ 7] <= 16'b0011_0101_0010_0000; // and
-        cpu.fetch_module.memory[ 8] <= 16'b1101_0101_0000_0101; // bgt
-        cpu.fetch_module.memory[ 9] <= 16'b0001_0011_0011_0000; // add
-        cpu.fetch_module.memory[10] <= 16'b0101_0011_00000001 ; // addi
-        cpu.fetch_module.memory[11] <= 16'b0101_0100_00000001 ; // addi
-        cpu.fetch_module.memory[12] <= 16'b1110_000_111111001 ;// jump
-        cpu.fetch_module.memory[13] <= 16'b0011_0110_0000_0000; // and
-        cpu.fetch_module.memory[14] <= 16'b0011_0111_0000_0000; // and
-        cpu.fetch_module.memory[15] <= 16'b0001_0111_0111_0000; // add
-        cpu.fetch_module.memory[16] <= 16'b0101_0111_00000001 ; // addi
-        cpu.fetch_module.memory[17] <= 16'b0101_0110_00000001 ; // addi
-        cpu.fetch_module.memory[18] <= 16'b1101_0100_0110_1101; // bgt
-        cpu.fetch_module.memory[19] <= 16'b1000_1000_00110010 ;    // ldi
-        cpu.fetch_module.memory[20] <= 16'b1000_1001_00110011 ;    // ldi
-        cpu.fetch_module.memory[21] <= 16'b0011_1010_0000_0000; // and
-        cpu.fetch_module.memory[22] <= 16'b0101_1001_00000001 ; // addi
-        cpu.fetch_module.memory[23] <= 16'b0011_1011_0000_0000; // and
-        cpu.fetch_module.memory[24] <= 16'b0001_1011_1000_0000; // add
-        cpu.fetch_module.memory[25] <= 16'b0011_1011_0111_0000; // and
-        cpu.fetch_module.memory[26] <= 16'b1101_1011_0000_0010; // bgt
-        cpu.fetch_module.memory[27] <= 16'b0001_1010_1000_0000; // add
-        cpu.fetch_module.memory[28] <= 16'b0101_1000_00000001 ; // addi
-        cpu.fetch_module.memory[29] <= 16'b1101_1001_1000_1010; // bgt
-        cpu.fetch_module.memory[30] <= 16'b1111111111111111   ; // halt
+        cpu.fetch_module.memory[ 0] <= 16'h0000;
+        cpu.fetch_module.memory[ 1] <= 16'b1000_0010_00001000;  // and: X = 8
+        cpu.fetch_module.memory[ 2] <= 16'b1000_0011_00000001;  // and: filter = 1
+        cpu.fetch_module.memory[ 3] <= 16'b1000_0100_00000000;  // and: I = 0
+        cpu.fetch_module.memory[ 4] <= 16'b0011_0101_0000_0000; // and: WHILE: temp = filter & X
+        cpu.fetch_module.memory[ 5] <= 16'b0001_0101_0011_0000; // add
+        cpu.fetch_module.memory[ 6] <= 16'b0011_0101_0010_0000; // and
+        cpu.fetch_module.memory[ 7] <= 16'b1101_0101_0000_0101; // bgt: if (5 > 0) goto OUTER
+        cpu.fetch_module.memory[ 8] <= 16'b0001_0011_0011_0000; // add: $3 = $3 + $3
+        cpu.fetch_module.memory[ 9] <= 16'b0101_0011_00000001 ; // addi $3 = $3 + 1
+        cpu.fetch_module.memory[10] <= 16'b0101_0100_00000001 ; // addi: I++
+        cpu.fetch_module.memory[11] <= 16'b1110_000_111111001 ; // jump: goto WHILE
+        cpu.fetch_module.memory[12] <= 16'b1000_0110_00000000;  // and: OUTER: L = 0
+        cpu.fetch_module.memory[13] <= 16'b1000_0111_00000000;  // and: filter2 = 0
+        cpu.fetch_module.memory[14] <= 16'b0001_0111_0111_0000; // add: FOR:   filter2 += filter2
+        cpu.fetch_module.memory[15] <= 16'b0101_0111_00000001 ; // addi: filter2++
+        cpu.fetch_module.memory[16] <= 16'b0101_0110_00000001 ; // addi: L++
+        cpu.fetch_module.memory[17] <= 16'b1101_0100_0110_1101; // bgt: if (I>L) goto FOR
+
+        cpu.fetch_module.memory[18] <= 16'b0011_0001_0000_0000;
+        cpu.fetch_module.memory[19] <= 16'b0011_0101_0000_0000;
+
+        cpu.fetch_module.memory[20] <= 16'b0011_0001_00000000; // and 1 0
+        cpu.fetch_module.memory[21] <= 16'b1000_0011_00000001; // ldi 3 1
+        cpu.fetch_module.memory[22] <= 16'b1000_0100_01100100; // ldi 4 100
+        cpu.fetch_module.memory[23] <= 16'b0011_0101_0000_0000; // and 5 0
+        cpu.fetch_module.memory[24] <= 16'b0001_0101_0111_0000; // add 5 7
+        cpu.fetch_module.memory[25] <= 16'b0011_0101_0011_0000; // and 5 3
+        cpu.fetch_module.memory[26] <= 16'b1101_0101_0000_0010; // bgt 5 0 2
+        cpu.fetch_module.memory[27] <= 16'b0001_0001_0011_0000; // add 1 3
+        cpu.fetch_module.memory[28] <= 16'b0101_0011_00000001;  // addi 3 1
+        cpu.fetch_module.memory[29] <= 16'b1101_0100_0011_1010; // bgt 4 3 -6
+        cpu.fetch_module.memory[30] <= 16'b1111_1111_1111_1111;
+        // sum: 1
     end
 endmodule
 
